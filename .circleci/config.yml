@@ -7,7 +7,16 @@ jobs:
       - image: remarkableas/circleci-cypress
     steps:
       - checkout
-      - run: yarn --ignore-engines
-      - run: yarn test
-      - run: nohup yarn start &
-      - run: yarn cypress:run --spec "cypress/integration/main/main.spec.js" 
+      - run: 
+          name: Install packages
+          command: yarn --ignore-engines
+      - run: 
+          name: Run unit tests
+          command: yarn test
+      - run: 
+          name: Start server
+          command: yarn start
+          background: true
+      - run: 
+          name: Run integration tests
+          command: yarn cypress:run --spec "cypress/integration/main/main.spec.js" 
