@@ -9,3 +9,4 @@ jobs:
       - checkout
       - run: yarn --ignore-engines
       - run: yarn test
+      - run: yarn cypress:run --spec "cypress/integration/main/main.spec.js" 
