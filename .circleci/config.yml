@@ -1,16 +1,13 @@
-version: 2.1
-orbs:
-  cypress: cypress-io/cypress@1
-workflows:
+version: 2
+
+jobs:
   build:
-    jobs:
-      - cypress/install:
-          build: 'yarn run build'  # run a custom app build step
-      - cypress/run:
-          requires:
-            - cypress/install
-          record: true        # record results on Cypress Dashboard
-          parallel: false
-          parallelism: 1
-          group: 'all tests'  # name this group "all tests" on the dashboard
-          start: 'yarn start'  # start server before running tests
+    working_directory: ~/tmp
+    docker:
+      - image: remarkableas/circleci-cypress
+    steps:
+      - checkout
+      - run: yarn --ignore-engines
+      - run: yarn test
+      - run: nohup yarn start &
+      - run: yarn cypress:run --spec "cypress/integration/main/main.spec.js" 
