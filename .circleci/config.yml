@@ -7,5 +7,5 @@ jobs:
       - image: circleci/node:7
     steps:
       - checkout
-      - run: yarn
-      - run: yarn
+      - run: yarn --ignore-engines
+      - run: yarn test
